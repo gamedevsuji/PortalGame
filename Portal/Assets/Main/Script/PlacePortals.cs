@@ -61,13 +61,13 @@ public class PlacePortals : MonoBehaviour
             clicked = true;
 
 
-                   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.RaycastNonAlloc(ray, Hits) > 0)
+
+            CastRays.RayHitGround((hasHit, hitPos) =>
+            {
+                if (hasHit)
                 {
-                    Debug.Log("portal length " + portalClones.Length+ " currentCubeIndex "+ currentCubeIndex);
-                   
-                        portalClones[currentCubeIndex].EnablePortal(Hits[0].point,this);
+                    portalClones[currentCubeIndex].EnablePortal(hitPos, this);
                     if (portalClones.Length > currentCubeIndex + 1)
                     {
                         ++currentCubeIndex;
@@ -78,7 +78,27 @@ public class PlacePortals : MonoBehaviour
                         startTime = true;
                     }
                 }
-            
+            });
+
+
+            //   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            //if (Physics.RaycastNonAlloc(ray, Hits) > 0)
+            //{
+            //    Debug.Log("portal length " + portalClones.Length+ " currentCubeIndex "+ currentCubeIndex);
+
+            //        portalClones[currentCubeIndex].EnablePortal(Hits[0].point,this);
+            //    if (portalClones.Length > currentCubeIndex + 1)
+            //    {
+            //        ++currentCubeIndex;
+            //    }
+            //    else
+            //    {
+            //        cubesExhausted = true;
+            //        startTime = true;
+            //    }
+            //}
+
         }
         else if(!InputController.instance.GetCubePlacement())
         {

@@ -14,12 +14,17 @@ public class InputController : MonoSingleton<InputController>
 
     private bool navigateInput;
     private bool placeCubeInput;
+    private float zoomInInput;
+    private float zoomOutInput;
 
 
     public Vector2 GetPlayerMovement() => moveInput;
     public Vector2 GetLook() => lookInput;
     public bool GetNavigate() => navigateInput;
     public bool GetCubePlacement() => placeCubeInput;
+
+    public float GetZoomIn() => zoomInInput;
+    public float GetZoomOut() => zoomOutInput;
 
 
     private void Awake() => controls = new Controls();
@@ -30,6 +35,8 @@ public class InputController : MonoSingleton<InputController>
         controls.Gameplay.Look.Enable();
         controls.Gameplay.Navigate.Enable();
         controls.Gameplay.PlaceCube.Enable();
+        controls.Gameplay.ZoomIn.Enable();
+        controls.Gameplay.ZoomOut.Enable();
 
 
         controls.Gameplay.Move.started += OnMovementInput;
@@ -46,6 +53,14 @@ public class InputController : MonoSingleton<InputController>
         controls.Gameplay.PlaceCube.started += OnPlaceCube;
         controls.Gameplay.PlaceCube.canceled += OnPlaceCube;
 
+        controls.Gameplay.ZoomIn.started += OnZoomIn;
+        controls.Gameplay.ZoomIn.performed += OnZoomIn;
+        controls.Gameplay.ZoomIn.canceled += OnZoomIn;
+
+        controls.Gameplay.ZoomOut.started += OnZoomOut;
+        controls.Gameplay.ZoomOut.performed += OnZoomOut;
+        controls.Gameplay.ZoomOut.canceled += OnZoomOut;
+
     }
 
     private void OnDisable() 
@@ -54,6 +69,8 @@ public class InputController : MonoSingleton<InputController>
         controls.Gameplay.Look.Disable();
         controls.Gameplay.Navigate.Disable();
         controls.Gameplay.PlaceCube.Disable();
+        controls.Gameplay.ZoomIn.Disable();
+        controls.Gameplay.ZoomOut.Disable();
 
 
 
@@ -70,12 +87,22 @@ public class InputController : MonoSingleton<InputController>
 
         controls.Gameplay.PlaceCube.started -= OnPlaceCube;
         controls.Gameplay.PlaceCube.canceled -= OnPlaceCube;
+
+        controls.Gameplay.ZoomIn.started -= OnZoomIn;
+        controls.Gameplay.ZoomIn.performed -= OnZoomIn;
+        controls.Gameplay.ZoomIn.canceled -= OnZoomIn;
+
+        controls.Gameplay.ZoomOut.started -= OnZoomOut;
+        controls.Gameplay.ZoomOut.performed -= OnZoomOut;
+        controls.Gameplay.ZoomOut.canceled -= OnZoomOut;
     }
 
     private void OnMovementInput(InputAction.CallbackContext context) => moveInput = context.ReadValue<Vector2>();
     private void OnLookInput(InputAction.CallbackContext context) => lookInput = context.ReadValue<Vector2>();
     private void OnNavigate(InputAction.CallbackContext context) => navigateInput = context.ReadValueAsButton();
     private void OnPlaceCube(InputAction.CallbackContext context) => placeCubeInput = context.ReadValueAsButton();
+    private void OnZoomIn(InputAction.CallbackContext context) => zoomInInput = context.ReadValue<float>();
 
+    private void OnZoomOut(InputAction.CallbackContext context) => zoomOutInput = context.ReadValue<float>();
 
 }

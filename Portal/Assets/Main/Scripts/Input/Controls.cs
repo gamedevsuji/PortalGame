@@ -62,6 +62,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ZoomIn"",
+                    ""type"": ""Value"",
+                    ""id"": ""35b18cd0-a12e-4212-ae09-a124538fc423"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ZoomOut"",
+                    ""type"": ""Value"",
+                    ""id"": ""961a092d-b7cd-44a0-9d76-400f400508f1"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -207,6 +225,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PlaceCube"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32ce025e-7fa7-483e-966b-6f78dd6c34ba"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ZoomIn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a60d6619-864d-440a-8ac8-58231934cbd9"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ZoomOut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -242,6 +282,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Navigate = m_Gameplay.FindAction("Navigate", throwIfNotFound: true);
         m_Gameplay_PlaceCube = m_Gameplay.FindAction("PlaceCube", throwIfNotFound: true);
+        m_Gameplay_ZoomIn = m_Gameplay.FindAction("ZoomIn", throwIfNotFound: true);
+        m_Gameplay_ZoomOut = m_Gameplay.FindAction("ZoomOut", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -307,6 +349,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Navigate;
     private readonly InputAction m_Gameplay_PlaceCube;
+    private readonly InputAction m_Gameplay_ZoomIn;
+    private readonly InputAction m_Gameplay_ZoomOut;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -315,6 +359,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Navigate => m_Wrapper.m_Gameplay_Navigate;
         public InputAction @PlaceCube => m_Wrapper.m_Gameplay_PlaceCube;
+        public InputAction @ZoomIn => m_Wrapper.m_Gameplay_ZoomIn;
+        public InputAction @ZoomOut => m_Wrapper.m_Gameplay_ZoomOut;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -336,6 +382,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PlaceCube.started += instance.OnPlaceCube;
             @PlaceCube.performed += instance.OnPlaceCube;
             @PlaceCube.canceled += instance.OnPlaceCube;
+            @ZoomIn.started += instance.OnZoomIn;
+            @ZoomIn.performed += instance.OnZoomIn;
+            @ZoomIn.canceled += instance.OnZoomIn;
+            @ZoomOut.started += instance.OnZoomOut;
+            @ZoomOut.performed += instance.OnZoomOut;
+            @ZoomOut.canceled += instance.OnZoomOut;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -352,6 +404,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PlaceCube.started -= instance.OnPlaceCube;
             @PlaceCube.performed -= instance.OnPlaceCube;
             @PlaceCube.canceled -= instance.OnPlaceCube;
+            @ZoomIn.started -= instance.OnZoomIn;
+            @ZoomIn.performed -= instance.OnZoomIn;
+            @ZoomIn.canceled -= instance.OnZoomIn;
+            @ZoomOut.started -= instance.OnZoomOut;
+            @ZoomOut.performed -= instance.OnZoomOut;
+            @ZoomOut.canceled -= instance.OnZoomOut;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -393,5 +451,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnPlaceCube(InputAction.CallbackContext context);
+        void OnZoomIn(InputAction.CallbackContext context);
+        void OnZoomOut(InputAction.CallbackContext context);
     }
 }

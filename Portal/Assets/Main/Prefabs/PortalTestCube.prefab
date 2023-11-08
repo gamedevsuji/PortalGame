@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 844838416955380411}
   - component: {fileID: 6632361565395447117}
   - component: {fileID: 8638161707182330179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PortalTestCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,3 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc7243fdb61e4b31a4f82e4d7cc993d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fromPortal: 0
